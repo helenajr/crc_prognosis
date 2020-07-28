@@ -9,22 +9,11 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+The T gene encodes the transcription factor Brachyury. It is an essential transcription factor for normal development, playing an important role in gastrulation and notochord formation, however it is switched off in most adult tissues. It can be re-expressed in cancer and the purpose of this project is to see if re-expression is associated with poor prognosis in colorectal cancer, using tcga data.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Firstly we need to load the data
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+Texpression <- read.delim("~/Desktop/crc_prognosis/2020-21-07_coadread.tsv")
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

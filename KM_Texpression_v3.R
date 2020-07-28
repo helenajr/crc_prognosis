@@ -1,5 +1,5 @@
 #Load data
-Texpression <- read.delim("~/Desktop/Xena/2020-21-07_coadread.tsv")
+Texpression <- read.delim("~/Desktop/crc_prognosis/2020-21-07_coadread.tsv")
 View(Texpression)
 #Look at sample type
 count(Texpression, sample_type)
