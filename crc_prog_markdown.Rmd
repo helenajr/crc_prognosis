@@ -2,9 +2,7 @@
 title: "CRC Prognosis"
 author: "Helena"
 date: "28/07/2020"
-output:
-  html_document:
-    df_print: paged
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
