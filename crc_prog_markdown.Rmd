@@ -2,7 +2,7 @@
 title: "CRC Prognosis"
 author: "Helena"
 date: "28/07/2020"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
