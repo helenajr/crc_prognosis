@@ -28,7 +28,7 @@ boxplot(normal$T, cancer$T,
         ylab = "T expression (log2(norm_count+1))")
 
 ####Kaplan Meier plots####
-#Dichotamise T expression
+#Dichotamise T expression based on normal range
 cancer <- cancer %>% 
   mutate(T_group = ifelse(T > 4.4110, "> normal range","normal range"))
 cancer$T_group <- factor(cancer$T_group)
@@ -47,6 +47,27 @@ ggsurvplot(fit1, data = cancer, pval = TRUE, xlab = "Time(days)")
 
 #Find n in groups and number of deleted obs
 fit1
+
+#Dichotamise T expression based on arbitary range
+cancer <- cancer %>% 
+  mutate(T_group_arb = ifelse(T > 4.5, "High","Low"))
+cancer$T_group_arb <- factor(cancer$T_group_arb)
+str(cancer)
+
+#Fit survival data using Kap-Meier method
+surv_object <- Surv(time = cancer$OS.time, event = cancer$OS)
+surv_object
+
+#Fit Kaplan Meier curves
+fit1 <- survfit(surv_object ~ T_group_arb, data = cancer)
+summary(fit1)
+
+#Display curve
+ggsurvplot(fit1, data = cancer, pval = TRUE, xlab = "Time(days)")
+
+#Find n in groups and number of deleted obs
+fit1
+
 
 #CoxPH model T group univariable
 cancer$T_group <- relevel(cancer$T_group, ref = "normal range")
