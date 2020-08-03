@@ -1,6 +1,6 @@
 #Load data
 samples <- 
-  read.delim("~/Desktop/Xena/tcga_target_gtex_colorectal.tsv", 
+  read.delim("~/Desktop/crc_prognosis/tcga_target_gtex_colorectal.tsv", 
              header=TRUE)
 View(samples)
 #Load required packages
@@ -27,7 +27,7 @@ boxplot(normal$T, cancer$T,
         xlab = "Tissue type",
         ylab = "T expression (log2(norm_count+1))")
 
-
+####Kaplan Meier plots####
 #Dichotamise T expression
 cancer <- cancer %>% 
   mutate(T_group = ifelse(T > 4.4110, "> normal range","normal range"))
