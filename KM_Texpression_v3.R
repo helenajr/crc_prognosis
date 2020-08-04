@@ -1,18 +1,15 @@
-#Load data
-Texpression <- read.delim("~/Desktop/crc_prognosis/2020-21-07_coadread.tsv")
-View(Texpression)
-#Look at sample type
-count(Texpression, sample_type)
-#new data frame filtered for only prim tumour
-prim_tumor <- filter(Texpression, sample_type == "Primary Tumor")
-
 #Load required packages
 library(survival)
 library(survminer)
 library(dplyr)
 library(forcats)
-glimpse(Texpression)
-glimpse(gtex)
+
+#Load data
+Texpression <- read.delim("~/Desktop/crc_prognosis/2020-21-07_coadread.tsv")
+#Look at sample type
+count(Texpression, sample_type)
+#new data frame filtered for only prim tumour
+prim_tumor <- filter(Texpression, sample_type == "Primary Tumor")
 
 #Summarise - number of samples in TCGA coadread
 length(prim_tumor$T)
@@ -20,9 +17,9 @@ length(na.omit(prim_tumor$T))
 summary(prim_tumor$T)
 
 #Specify factor levels and convert other values to NA
-Texpression$gender <- factor(Texpression$gender, c("FEMALE", "MALE"))
-str(Texpression$gender)
-Texpression <- Texpression %>% 
+prim_tumor$gender <- factor(prim_tumor$gender, c("FEMALE", "MALE"))
+str(prim_tumor$gender)
+prim_tumor <- prim_tumor %>% 
   mutate(stage_group = fct_collapse(Texpression$pathologic_stage, 
                                     Stage1 = c("Stage I", "Stage IA"),
                                     Stage2 = c("Stage II", "Stage IIA",
