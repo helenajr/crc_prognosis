@@ -17,6 +17,7 @@ count(samples, X_sample_type)
 normal <- filter(samples, X_sample_type == "Normal Tissue")
 summary(normal$T)
 count(normal, T >0)
+count(normal, filter(T >0 == TRUE))
 cancer <- filter(samples, X_sample_type == "Primary Tumor")
 summary(cancer$T)
 count(cancer, T >0)
@@ -68,7 +69,7 @@ ggsurvplot(fit1, data = cancer, pval = TRUE, xlab = "Time(days)")
 #Find n in groups and number of deleted obs
 fit1
 
-#Combine boxplot and KM
+#Combine boxplot and KM - doesn't work yet
 par(mfrow=c(1,2))
 boxplot(normal$T, cancer$T,
         at = c(1,2),
@@ -77,7 +78,7 @@ boxplot(normal$T, cancer$T,
         ylab = "T expression (log2(norm_count+1))")
 ggsurvplot(fit1, data = cancer, pval = TRUE, xlab = "Time(days)")
 
-#CoxPH model T group univariable
+#CoxPH model T group univariable - ggforest not working
 cancer$T_group <- relevel(cancer$T_group, ref = "normal range")
 fit.coxph <- coxph(surv_object ~ T_group, data = cancer)
 ggforest(fit.coxph, data = cancer)
