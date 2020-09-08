@@ -68,6 +68,14 @@ ggsurvplot(fit1, data = cancer, pval = TRUE, xlab = "Time(days)")
 #Find n in groups and number of deleted obs
 fit1
 
+#Combine boxplot and KM
+par(mfrow=c(1,2))
+boxplot(normal$T, cancer$T,
+        at = c(1,2),
+        names = c("Normal", "Cancer"),
+        xlab = "Tissue type",
+        ylab = "T expression (log2(norm_count+1))")
+ggsurvplot(fit1, data = cancer, pval = TRUE, xlab = "Time(days)")
 
 #CoxPH model T group univariable
 cancer$T_group <- relevel(cancer$T_group, ref = "normal range")
