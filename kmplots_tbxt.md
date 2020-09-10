@@ -263,17 +263,3 @@ There does seem to be a difference in prognosis between patients with
 \>normal and normal levels of TBXT mRNA. The observation of a difference
 seems to be robust at many different cut-offs, but the level of
 statistical significance varies depending on the cut-off.
-
-This is undoubtedly p-hacking and I wonder if it would be disingenuous
-to present the most dramatic looking graph (cutoff at 5.7) without
-mentioning that I p-hacked my way there.
-
-The more easily defendable place to put the cut-off is split between
-normal range and \> normal range as there is a rationale to support that
-independent of having looked at the data (but the result is not quite
-significant).
-
-With my less sceptical hat on, my feeling is that there is a connection
-between higher than normal Brachyury and poor prognosis in this data -
-the finding of a significant association is relatively robust whichever
-cutoff is used.
