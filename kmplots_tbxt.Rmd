@@ -2,7 +2,7 @@
 title: "KM plots based on TBXT mRNA levels"
 author: "Helena"
 date: "08/09/2020"
-output: github_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
