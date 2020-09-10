@@ -9,36 +9,22 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Preparation for analysis
-
-Load the data and store it in an object 'samples'. The data I am using was downloaded from the UCSC Xena project. It combines RNASeq data from TCGA (cancer tissues) and GTex (normal tissues) via a common bioinformatics pipeline - so you can directly compare values from both studies.
-
-```{r}
+```{r, include=FALSE}
 samples <- 
   read.delim("~/Desktop/crc_prognosis/tcga_target_gtex_colorectal.tsv", 
              header=TRUE)
 ```
 
-Load required packages
-
-```{r, message=FALSE}
+```{r, include=FALSE}
 library(survival)
 library(survminer)
 library(dplyr)
 library(forcats)
 ```
 
-## Summary and boxplot
+## Boxplot shows distributuon of data
 
-Summarise numbers of samples of each type in the dataset. We are only interested in 'Primary tumor'(which comes from the TCGA dataset) and 'Normal Tissue' (GTex) for the following analyses. 
-
-(I have decided not to include the 'Solid Tissue Normal' samples in the following analyses. These are from the TCGA and are normal samples adjacent to some of the tumor samples as opposed to from non-cancer patients and therefore not independent data points. I should do a boxplot of these vs their primary tumor counterparts though.)
-
-```{r}
-count(samples, X_sample_type)
-```
-
-This is a boxplot summarising TBXT mRNA levels in normal colon tissue (GTex) vs primary colorectal adenoma.
+This is a boxplot summarising TBXT mRNA levels in normal colon tissue (GTex) vs primary colorectal adenoma (TCGA).
 
 ```{r}
 normal <- filter(samples, X_sample_type == "Normal Tissue")
@@ -54,7 +40,7 @@ As you can see from the boxplot although the majority of samples in both dataset
 
 ## Survival analyses (Kaplan Meier plots)
 
-These analyses define a high Brachyury group and a low Brachyury group, look at the relative survival of those groups then test for a significant different in survival using a logrank test. You get different results depending on how you define the groups. Here I go through what the results are for lots of different definitions.
+These analyses define a high Brachyury group and a low Brachyury group, look at the relative survival of those groups then test for a significant different in survival using a logrank test. You get different results depending on how you define the groups - where you put the cut-off between low and high. Here I go through what the results are for lots of different definitions.
 
 ## Above the max normal value
 

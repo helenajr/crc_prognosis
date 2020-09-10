@@ -3,54 +3,10 @@ KM plots based on TBXT mRNA levels
 Helena
 08/09/2020
 
-## Preparation for analysis
-
-Load the data and store it in an object ‘samples’. The data I am using
-was downloaded from the UCSC Xena project. It combines RNASeq data from
-TCGA (cancer tissues) and GTex (normal tissues) via a common
-bioinformatics pipeline - so you can directly compare values from both
-studies.
-
-``` r
-samples <- 
-  read.delim("~/Desktop/crc_prognosis/tcga_target_gtex_colorectal.tsv", 
-             header=TRUE)
-```
-
-Load required packages
-
-``` r
-library(survival)
-library(survminer)
-library(dplyr)
-library(forcats)
-```
-
-## Summary and boxplot
-
-Summarise numbers of samples of each type in the dataset. We are only
-interested in ‘Primary tumor’(which comes from the TCGA dataset) and
-‘Normal Tissue’ (GTex) for the following analyses.
-
-(I have decided not to include the ‘Solid Tissue Normal’ samples in the
-following analyses. These are from the TCGA and are normal samples
-adjacent to some of the tumor samples as opposed to from non-cancer
-patients and therefore not independent data points. I should do a
-boxplot of these vs their primary tumor counterparts though.)
-
-``` r
-count(samples, X_sample_type)
-```
-
-    ##         X_sample_type   n
-    ## 1          Metastatic   1
-    ## 2       Normal Tissue 308
-    ## 3       Primary Tumor 380
-    ## 4     Recurrent Tumor   2
-    ## 5 Solid Tissue Normal  51
+## Boxplot shows distributuon of data
 
 This is a boxplot summarising TBXT mRNA levels in normal colon tissue
-(GTex) vs primary colorectal adenoma.
+(GTex) vs primary colorectal adenoma (TCGA).
 
 ``` r
 normal <- filter(samples, X_sample_type == "Normal Tissue")
@@ -62,7 +18,7 @@ boxplot(normal$T, cancer$T,
         ylab = "T expression (log2(norm_count+1))")
 ```
 
-![](kmplots_tbxt_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](kmplots_tbxt_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 As you can see from the boxplot although the majority of samples in both
 datasets are similarly distributed with no/ low TBXT mRNA, the cancer
@@ -73,8 +29,9 @@ dataset has more outliers that exhibit higher TBXT expression.
 These analyses define a high Brachyury group and a low Brachyury group,
 look at the relative survival of those groups then test for a
 significant different in survival using a logrank test. You get
-different results depending on how you define the groups. Here I go
-through what the results are for lots of different definitions.
+different results depending on how you define the groups - where you put
+the cut-off between low and high. Here I go through what the results are
+for lots of different definitions.
 
 ## Above the max normal value
 
@@ -99,7 +56,7 @@ fit1 <- survfit(surv_object ~ T_group, data = cancer)
 ggsurvplot(fit1, data = cancer, pval = TRUE, xlab = "Time(days)")
 ```
 
-![](kmplots_tbxt_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](kmplots_tbxt_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 There appears to be a difference between the groups but it narrowly
 misses significance in the log-rank test. This table shows the number of
@@ -140,7 +97,7 @@ fit1 <- survfit(surv_object ~ T_group_quart, data = cancer)
 ggsurvplot(fit1, data = cancer, pval = TRUE, xlab = "Time(days)")
 ```
 
-![](kmplots_tbxt_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](kmplots_tbxt_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ``` r
 fit1
@@ -171,7 +128,7 @@ fit1 <- survfit(surv_object ~ T_group_arb, data = cancer)
 ggsurvplot(fit1, data = cancer, pval = TRUE, xlab = "Time(days)")
 ```
 
-![](kmplots_tbxt_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](kmplots_tbxt_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ``` r
 fit1
@@ -199,7 +156,7 @@ fit1 <- survfit(surv_object ~ T_group_arb, data = cancer)
 ggsurvplot(fit1, data = cancer, pval = TRUE, xlab = "Time(days)")
 ```
 
-![](kmplots_tbxt_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](kmplots_tbxt_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 ``` r
 fit1
@@ -244,7 +201,7 @@ fit1 <- survfit(surv_object ~ T_group_arb, data = cancer)
 ggsurvplot(fit1, data = cancer, pval = TRUE, xlab = "Time(days)")
 ```
 
-![](kmplots_tbxt_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](kmplots_tbxt_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 ``` r
 fit1
