@@ -31,8 +31,8 @@ boxplot(normal$T, cancer$T,
 ####Kaplan Meier plots####
 #Dichotamise T expression based on normal range
 cancer <- cancer %>% 
-  mutate(T_group = ifelse(T > 4.4110, "> normal range","normal range"))
-cancer$T_group <- factor(cancer$T_group)
+  mutate(TBXT_group = ifelse(T > 4.4110, " > Normal range"," Normal range"))
+cancer$TBXT_group <- factor(cancer$TBXT_group)
 str(cancer)
 
 #Fit survival data using Kap-Meier method
@@ -40,7 +40,7 @@ surv_object <- Surv(time = cancer$OS.time, event = cancer$OS)
 surv_object
 
 #Fit Kaplan Meier curves
-fit1 <- survfit(surv_object ~ T_group, data = cancer)
+fit1 <- survfit(surv_object ~ TBXT_group, data = cancer)
 summary(fit1)
 
 #Display curve
@@ -90,8 +90,8 @@ ggsurvplot(fit1, data = cancer, pval = TRUE, xlab = "Time(days)")
 fit1
 
 cancer <- cancer %>% 
-  mutate(T_group_arb = ifelse(T > 4.6, "High","Low"))
-cancer$T_group_arb <- factor(cancer$T_group_arb)
+  mutate(TBXT_group = ifelse(T > 5.7, " High"," Low"))
+cancer$TBXT_group <- factor(cancer$TBXT_group)
 str(cancer)
 
 #Fit survival data using Kap-Meier method
@@ -99,7 +99,7 @@ surv_object <- Surv(time = cancer$OS.time, event = cancer$OS)
 surv_object
 
 #Fit Kaplan Meier curves
-fit1 <- survfit(surv_object ~ T_group_arb, data = cancer)
+fit1 <- survfit(surv_object ~ TBXT_group, data = cancer)
 summary(fit1)
 
 #Display curve
